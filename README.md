@@ -6,4 +6,13 @@
 [主要参考https://www.bilibili.com/video/BV1L24y187cK](https://www.bilibili.com/video/BV1L24y187cK)
 
 
+去toolchain解压arm-2009q3.tar.bz2 解压到指定目录！！自行修改！！
+export PATH=$PATH:/home/yjrqz/x-tools/arm-2009q3/bin
+
+
+```
+export PATH=$PATH:/home/yjrqz/x-tools/arm-2009q3/bin
+make s5p_goni_config
+make -j12
+```
 
