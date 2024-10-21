@@ -1,5 +1,5 @@
-/* ÔÚBL0½×¶Î£¬IromÄÚ¹Ì»¯µÄ´úÂë¶ÁÈ¡nandflash»òSD¿¨Ç°16KµÄÄÚÈİ£¬
- * ²¢±È¶ÔÇ°16×Ö½ÚÖĞµÄĞ£ÑéºÍÊÇ·ñÕıÈ·£¬ÕıÈ·Ôò¼ÌĞø£¬´íÎóÔòÍ£Ö¹¡£
+/* åœ¨BL0é˜¶æ®µï¼ŒIromå†…å›ºåŒ–çš„ä»£ç è¯»å–nandflashæˆ–SDå¡å‰16Kçš„å†…å®¹ï¼Œ
+ * å¹¶æ¯”å¯¹å‰16å­—èŠ‚ä¸­çš„æ ¡éªŒå’Œæ˜¯å¦æ­£ç¡®ï¼Œæ­£ç¡®åˆ™ç»§ç»­ï¼Œé”™è¯¯åˆ™åœæ­¢ã€‚
  */
 #include <stdio.h>
 #include <string.h>
@@ -19,14 +19,14 @@ int main (int argc, char *argv[])
 	unsigned int	checksum, count;
 	int		i;
 	
-	// 1. 3¸ö²ÎÊı
+	// 1. 3ä¸ªå‚æ•°
 	if (argc != 3)
 	{
 		printf("Usage: mkbl1 <source file> <destination file>\n");
 		return -1;
 	}
 
-	// 2. ·ÖÅä16KµÄbuffer
+	// 2. åˆ†é…16Kçš„buffer
 	BufLen = BUFSIZE;
 	Buf = (char *)malloc(BufLen);
 	if (!Buf)
@@ -37,8 +37,8 @@ int main (int argc, char *argv[])
 
 	memset(Buf, 0x00, BufLen);
 
-	// 3. ¶ÁÔ´binµ½buffer
-	// 3.1 ´ò¿ªÔ´bin
+	// 3. è¯»æºbinåˆ°buffer
+	// 3.1 æ‰“å¼€æºbin
 	fp = fopen(argv[1], "rb");
 	if( fp == NULL)
 	{
@@ -46,16 +46,16 @@ int main (int argc, char *argv[])
 		free(Buf);
 		return -1;
 	}
-	// 3.2 »ñÈ¡Ô´bin³¤¶È
+	// 3.2 è·å–æºbiné•¿åº¦
 	fseek(fp, 0L, SEEK_END);
 	fileLen = ftell(fp);
 	fseek(fp, 0L, SEEK_SET);
-	// 3.3 Ô´bin³¤¶È²»µÃ³¬¹ı16K-16byte
+	// 3.3 æºbiné•¿åº¦ä¸å¾—è¶…è¿‡16K-16byte
 	count = (fileLen < (IMG_SIZE - SPL_HEADER_SIZE))
 		? fileLen : (IMG_SIZE - SPL_HEADER_SIZE);
-	// 3.4 buffer[0~15]´æ·Å"S5PC110 HEADER  "
+	// 3.4 buffer[0~15]å­˜æ”¾"S5PC110 HEADER  "
 	memcpy(&Buf[0], SPL_HEADER, SPL_HEADER_SIZE);
-	// 3.5 ¶ÁÔ´binµ½buffer[16]
+	// 3.5 è¯»æºbinåˆ°buffer[16]
 	nbytes = fread(Buf + SPL_HEADER_SIZE, 1, count, fp);
 	if ( nbytes != count )
 	{
@@ -66,17 +66,17 @@ int main (int argc, char *argv[])
 	}
 	fclose(fp);
 
-	// 4. ¼ÆËãĞ£ÑéºÍ
- 	// 4.1 ´ÓµÚ16byte¿ªÊ¼Í³¼ÆbufferÖĞ¹²ÓĞ¼¸¸ö1
+	// 4. è®¡ç®—æ ¡éªŒå’Œ
+ 	// 4.1 ä»ç¬¬16byteå¼€å§‹ç»Ÿè®¡bufferä¸­å…±æœ‰å‡ ä¸ª1
 	a = Buf + SPL_HEADER_SIZE;
 	for(i = 0, checksum = 0; i < IMG_SIZE - SPL_HEADER_SIZE; i++)
 		checksum += (0x000000FF) & *a++;
-	// 4.2 ½«Ğ£ÑéºÍ±£´æÔÚbuffer[8~15]
+	// 4.2 å°†æ ¡éªŒå’Œä¿å­˜åœ¨buffer[8~15]
 	a = Buf + 8;
 	*( (unsigned int *)a ) = checksum;
 
-	// 5. ¿½±´bufferÖĞµÄÄÚÈİµ½Ä¿µÄbin
-	// 5.1 ´ò¿ªÄ¿µÄbin
+	// 5. æ‹·è´bufferä¸­çš„å†…å®¹åˆ°ç›®çš„bin
+	// 5.1 æ‰“å¼€ç›®çš„bin
 	fp = fopen(argv[2], "wb");
 	if (fp == NULL)
 	{
@@ -84,7 +84,7 @@ int main (int argc, char *argv[])
 		free(Buf);
 		return -1;
 	}
-	// 5.2 ½«16kµÄbuffer¿½±´µ½Ä¿µÄbinÖĞ
+	// 5.2 å°†16kçš„bufferæ‹·è´åˆ°ç›®çš„binä¸­
 	a = Buf;
 	nbytes	= fwrite( a, 1, BufLen, fp);
 	if ( nbytes != BufLen )

@@ -14,7 +14,7 @@ export PATH=$PATH:/home/yjrqz/x-tools/arm-2009q3/bin
 
 ---
 声明环境  
-export PATH=$PATH:/home/y/myuboot-master/toolchain/arm-2009q3/bin
+export PATH=$PATH:/home/y/myuboot/toolchain/arm-2009q3/bin
 
 ---
 找不到 arm-none-linux-gnueabi-gcc时执行
@@ -73,3 +73,15 @@ $ git config --global user.name xxx
 $ git config --global user.email xxx 
 ```
 
+2024年10月21日23:27:00
+
+
+```
+arm-none-linux-gnueabi-as mystrart.s -o mystrart.o   
+or
+arm-none-linux-gnueabi-gcc -c mystrart.s  
+
+
+arm-none-linux-gnueabi-size xx.o
+
+```
