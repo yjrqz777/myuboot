@@ -10,6 +10,12 @@ u-boot-2012.10-rc3.tar.bz2
 
 去toolchain解压arm-2009q3.tar.bz2 解压到指定目录！！自行修改！！
 export PATH=$PATH:/home/yjrqz/x-tools/arm-2009q3/bin
+/home/y/myuboot-master/toolchain/arm-2009q3
+
+
+export PATH=$PATH:/home/y/myuboot-master/toolchain/arm-2009q3/bin
+
+
 
 
 ```
@@ -29,3 +35,32 @@ bl xx 先 b 后lr 保存 下一句指针到lr
 
 
 ```
+
+sudo dd iflag=dsync oflag=dsync if=uboot.16k of=/dev/sdb seek=1
+
+./mkv210 u-boot.bin uboot.16k
+
+
+`
+sudo apt-get install lib32ncurses5* lib32z1 -y
+
+make -j12
+
+cp ./u-boot-2012.10/u-boot.bin ./
+
+./mkv210 u-boot.bin u-boot.16k
+
+
+# WARNING 此命令不能在wsl中执行
+# WARNING 此命令不能在wsl中执行
+# WARNING 此命令不能在wsl中执行
+```
+sudo dd iflag=dsync oflag=dsync if=u-boot.16k of=/dev/sdb seek=1
+```
+
+
+
+
+$ git config --global user.name "yjrqz777"
+$ git config --global user.email 3210551161@qq.com
+
