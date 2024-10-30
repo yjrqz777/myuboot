@@ -14,7 +14,7 @@ export PATH=$PATH:/home/yjrqz/x-tools/arm-2009q3/bin
 
 ---
 声明环境  
-export PATH=$PATH:/home/y/myuboot/toolchain/arm-2009q3/bin
+export PATH=$PATH:/home/yjrqz/myuboot/toolchain/arm-2009q3/bin
 
 ---
 找不到 arm-none-linux-gnueabi-gcc时执行
@@ -63,9 +63,9 @@ cp ./u-boot-2012.10/u-boot.bin ./
 # WARNING 此命令不能在wsl中执行
 
 ```
-sudo dd iflag=dsync oflag=dsync if=u-boot.16k of=/dev/sdb seek=1
+sudo dd iflag=dsync oflag=dsync if=u-boot.16k of=/dev/sdd seek=1
 ```
-
+sudo dd if=/dev/zero of=/dev/sdd bs=4M status=progress
 
 
 ```
@@ -83,5 +83,51 @@ arm-none-linux-gnueabi-gcc -c mystrart.s
 
 
 arm-none-linux-gnueabi-size xx.o
+
+```
+
+
+```
+gpio_out:
+	ldr	r11,	=0xE0200C00
+	ldr 	r12,	=0x11000000
+	str	r12,	[r11]
+
+	ldr	r11,	=0xE0200C04
+	mov	r12,	#0
+	str	r12,	[r11]
+	mov 	r13, 	#0x1000
+	
+	mov 	pc,	lr
+
+.globl led_on
+led_on:
+	ldr	r11,	=0xE0200C04
+	mov	r12,	#0
+	str	r12,	[r11]
+	
+	bl delay
+	
+	ldr	r11, 	=0xE0200C04
+	mov 	r12,	#0xC0
+	str	r12, 	[r11]
+	
+	bl delay
+	
+	sub r13, r13, #1
+	cmp r13,#0
+	
+	bne led_on
+
+halt:
+	b halt
+
+delay:
+	mov r12, #0x100000
+delay_loop:
+	cmp r12, #0
+	sub r12, r12, #1
+	bne delay_loop
+	mov pc, lr
 
 ```
