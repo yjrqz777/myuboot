@@ -26,3 +26,10 @@ hexdump -C myboot.16k
 sudo dd iflag=dsync oflag=dsync if=myboot.16k of=/dev/sdd seek=1
 
 ```
+
+$@ :所有的目标集合
+$< :依赖文件的第一个
+$^ :所有的依赖文件集合
+
+模式匹配
+%.s 所有的.s文件

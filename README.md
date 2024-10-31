@@ -62,6 +62,8 @@ cp ./u-boot-2012.10/u-boot.bin ./
 # WARNING 此命令不能在wsl中执行
 # WARNING 此命令不能在wsl中执行
 
+好吧，也可以，但是要找对盘符！！！
+
 ```
 sudo dd iflag=dsync oflag=dsync if=u-boot.16k of=/dev/sdd seek=1
 ```
@@ -131,3 +133,19 @@ delay_loop:
 	mov pc, lr
 
 ```
+
+
+
+touch : 碰一碰更新文件时间
+
+
+$@ :所有的目标集合
+
+$< :依赖文件的第一个
+
+$^ :所有的依赖文件集合
+
+模式匹配
+
+%.o
+%.s 所有的.s文件

@@ -1,7 +1,7 @@
 
-GCC = arm-none-linux-gnueabi-gcc
-LD = arm-none-linux-gnueabi-ld
-OBJCOPY = arm-none-linux-gnueabi-objcopy
+GCC := arm-none-linux-gnueabi-gcc
+LD := arm-none-linux-gnueabi-ld
+OBJCOPY := arm-none-linux-gnueabi-objcopy
 
 .PHONY:all
 
@@ -13,11 +13,16 @@ myboot: mystart.o mylowlevel.o myboot.lds
 	$(OBJCOPY) -O binary myboot myboot.bin
 	./mkv210 myboot.bin myboot.16k
 
+%.o:%.s
+	$(GCC) -o $@ -c $<
 
-mystart.o: mystart.s
-	$(GCC) -c mystart.s
-mylowlevel.o: mylowlevel.s
-	$(GCC) -c mylowlevel.s
+# %.o:%.s
+# 	$(GCC) -c $<
+
+# mystart.o: mystart.s
+# 	$(GCC) -c mystart.s
+# mylowlevel.o: mylowlevel.s
+# 	$(GCC) -c mylowlevel.s
 
 .PHONY:flash
 flash:
