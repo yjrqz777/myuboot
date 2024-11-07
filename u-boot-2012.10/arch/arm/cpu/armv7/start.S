@@ -149,7 +149,7 @@ reset:
 	mcr	p15, 0, r0, c12, c0, 0	@Set VBAR
 #endif
 	bl	gpio_out
-	b	led_on
+	@ b	led_on
 	/* the mask ROM code should have PLL and others stable */
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
 	bl	cpu_init_cp15
@@ -563,37 +563,37 @@ gpio_out:
 	ldr	r11,	=0xE0200C04
 	mov	r12,	#0
 	str	r12,	[r11]
-	mov 	r13, 	#0x1000
+	@ mov 	r13, 	#0x1000
 	
 	mov 	pc,	lr
 
-.globl led_on
-led_on:
-	ldr	r11,	=0xE0200C04
-	mov	r12,	#0
-	str	r12,	[r11]
+@ .globl led_on
+@ led_on:
+@ 	ldr	r11,	=0xE0200C04
+@ 	mov	r12,	#0
+@ 	str	r12,	[r11]
 	
-	bl delay
+	@ bl delay
 	
-	ldr	r11, 	=0xE0200C04
-	mov 	r12,	#0xC0
-	str	r12, 	[r11]
+	@ ldr	r11, 	=0xE0200C04
+	@ mov 	r12,	#0xC0
+	@ str	r12, 	[r11]
 	
-	bl delay
+	@ bl delay
 	
-	sub r13, r13, #1
-	cmp r13,#0
+	@ sub r13, r13, #1
+	@ cmp r13,#0
 	
-	bne led_on
+	@ bne led_on
 
-halt:
-	b halt
+@ halt:
+@ 	b halt
 
-delay:
-	mov r12, #0x100000
-delay_loop:
-	cmp r12, #0
-	sub r12, r12, #1
-	bne delay_loop
-	mov pc, lr
+@ delay:
+@ 	mov r12, #0x100000
+@ delay_loop:
+@ 	cmp r12, #0
+@ 	sub r12, r12, #1
+@ 	bne delay_loop
+@ 	mov pc, lr
 
